@@ -1,7 +1,8 @@
+import React from 'react';
 import { Task } from '../Task';
 import styles from './tasks.module.css';
 
-export function Tasks({ tasks, onDelete, onComplete }) {
+export function Tasks({ tasks, onDelete, onComplete, onEdit }) {
   const tasksQuantity = tasks.length;
   const completedTasks = tasks.filter(task => task.isCompleted).length;
 
@@ -21,7 +22,13 @@ export function Tasks({ tasks, onDelete, onComplete }) {
 
       <div className={styles.list}>
         {tasks.map((task) => (
-          <Task key={task.id} task={task} onDelete={onDelete} onComplete={onComplete} />
+          <Task
+            key={task.id}
+            task={task}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            onComplete={onComplete}
+          />
         ))}
       </div>
     </section>

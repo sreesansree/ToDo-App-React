@@ -21,6 +21,17 @@
     color: #808080;
     text-decoration: line-through;
   }
+  input.textCompleted {
+    background: #262626;
+    border: 1px solid #333333;
+    border: 1px solid #333333;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 19px;
+    color: #F2F2F2;
+    margin-right: auto;
+  }
   
   .checkContainer {
     width: 18px;
@@ -41,7 +52,11 @@
     height: 100%;
     color: #5E60CE;
   }
-  
+  .saveButton{
+    background: none;
+    border: none;
+    color: #808080;
+  }
   .deleteButton {
     background: none;
     border: none;

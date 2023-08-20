@@ -1,0 +1,13 @@
+/* App.css */
+
+.error-message {
+    color: rgb(18, 216, 140);
+    font-size: 20px;
+    margin: 2px auto; /* Center horizontally */
+    text-align: center; /* Center text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh; /* Center vertically within the viewport */
+  }
+  

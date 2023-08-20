@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import React ,{ useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { Tasks } from "./components/Tasks";
+import './styles/App.css';
 
 const LOCAL_STORAGE_KEY = 'todo:tasks';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [emptyFieldError, setEmptyFieldError] = useState(false); // New state for empty field error
 
   function loadSavedTasks() {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if(saved) {
+    if (saved) {
       setTasks(JSON.parse(saved));
     }
   }
@@ -24,12 +26,38 @@ function App() {
   }, [])
 
   function addTask(taskTitle) {
+    if (taskTitle.trim() === '') {
+      // Display error message and return
+      setEmptyFieldError(true);
+
+      setTimeout(() => {
+        setEmptyFieldError(false);
+      }, 4000);
+
+      return;
+    }
+    // Clear error message if not empty
+    setEmptyFieldError(false);
+
     setTasksAndSave([...tasks, {
       id: crypto.randomUUID(),
       title: taskTitle,
       isCompleted: false
     }]);
   }
+
+  function editTasksById(taskId, newTitle) {
+    const newTasks = tasks.map(task => {
+        if (task.id === taskId) {
+            return {
+                ...task,
+                title: newTitle
+            };
+        }
+        return task;
+    });
+    setTasksAndSave(newTasks);
+}
 
   function deleteTaskById(taskId) {
     const newTasks = tasks.filter(task => task.id !== taskId);
@@ -38,7 +66,7 @@ function App() {
 
   function toggleTaskCompletedById(taskId) {
     const newTasks = tasks.map(task => {
-      if(task.id === taskId) {
+      if (task.id === taskId) {
         return {
           ...task,
           isCompleted: !task.isCompleted
@@ -52,8 +80,10 @@ function App() {
   return (
     <>
       <Header handleAddTask={addTask} />
+      {emptyFieldError && <p className="error-message">Please enter a task title.</p>}
       <Tasks
         tasks={tasks}
+        onEdit={editTasksById}
         onDelete={deleteTaskById}
         onComplete={toggleTaskCompletedById}
       />
